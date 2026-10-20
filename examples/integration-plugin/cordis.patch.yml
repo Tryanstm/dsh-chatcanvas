@@ -1,0 +1,4 @@
+- insert:
+    - id: enhanced-renderer-integration
+      name: '@local/dsh-chatcanvas-integration'
+

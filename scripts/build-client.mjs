@@ -1,0 +1,5 @@
+import {buildTranscription} from './build-transcription.mjs';
+import {soundfontDefine,stageSoundfont} from './soundfont-build.mjs';
+import {build} from 'esbuild';import fs from 'node:fs';
+export async function buildClient(){await buildTranscription();const result=await build({define:soundfontDefine,entryPoints:['src/host/client.tsx'],outfile:'dist/client.js',bundle:true,target:'es2022',platform:'browser',format:'cjs',sourcemap:false,write:false,external:['react','react/jsx-runtime','react-dom','react-dom/client','@deepseek-ai/dsh-client-ui-primitives'],loader:{'.css':'text'},minify:true,legalComments:'eof',logLevel:'warning'});const body=result.outputFiles.find(f=>!f.path.endsWith('.map'))?.text;if(!body)throw Error('No client output');fs.writeFileSync('dist/client.js',`window.__ModuleLoader__.load({id:'@local/dsh-chatcanvas',factory:(require)=>{const module={exports:{}};const exports=module.exports;\n${body}\nreturn module.exports;}});`);}
+if(process.argv[1]?.replaceAll('\\','/').endsWith('/build-client.mjs'))await buildClient();

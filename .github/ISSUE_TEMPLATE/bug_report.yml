@@ -1,0 +1,28 @@
+name: Bug report / 问题反馈
+description: Report a reproducible issue / 提交可复现问题
+body:
+  - type: markdown
+    attributes:
+      value: Please remove API keys, private messages and personal paths from examples. 请先遮住密钥、私人聊天和个人路径。
+  - type: input
+    id: plugin_version
+    attributes:
+      label: ChatCanvas version / 插件版本
+    validations:
+      required: true
+  - type: input
+    id: host_version
+    attributes:
+      label: Harness version and OS / 宿主版本与系统
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps, expected result and actual result / 复现步骤、预期与实际结果
+    validations:
+      required: true
+  - type: textarea
+    id: sample
+    attributes:
+      label: Sanitized example or screenshot / 已去隐私的示例或截图

@@ -1,0 +1,7 @@
+{
+  "package": "@tensorflow/tfjs",
+  "version": "3.21.0",
+  "tarball": "https://registry.npmjs.org/@tensorflow/tfjs/-/tfjs-3.21.0.tgz",
+  "integrity": "sha512-khcARd3/872llL/oF4ouR40qlT71mylU66PGT8kHP/GJ5YKj44sv8lDRjU7lOVlJK7jsJFWEsNVHI3eMc/GWNQ==",
+  "sha256": "3017b7ed8072b6a51e580c9d6b78b605d43689feffdfd5dc929675f3be0affbb"
+}

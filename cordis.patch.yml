@@ -1,0 +1,3 @@
+- insert:
+    - id: dsh-chatcanvas
+      name: '@local/dsh-chatcanvas'

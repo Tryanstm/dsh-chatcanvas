@@ -1,0 +1,4 @@
+import {VisualTextDocumentSchema,type VisualTextDocument} from '../protocol';
+export const escapeXML=(s:string)=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+export function textSVG(raw:VisualTextDocument){const d=VisualTextDocumentSchema.parse(raw);return `<svg xmlns="http://www.w3.org/2000/svg" width="${d.width}" height="${d.height}" viewBox="0 0 ${d.width} ${d.height}"><title>${escapeXML(d.title)}</title><text font-family="sans-serif" font-size="${d.fontSize}" fill="${d.color}" font-weight="${d.bold?700:400}">${d.text.split('\n').map((line,i)=>`<tspan x="0" y="${d.fontSize*(1+i*1.3)}">${escapeXML(line)}</tspan>`).join('')}</text></svg>`;}
+export function importTextProject(text:string){if(text.length>2000000)throw Error('文字工程过大');const v=JSON.parse(text);if(v.format!=='dser-text-project'||v.version!==1)throw Error('不支持的文字工程版本');return {...VisualTextDocumentSchema.parse(v.document),mode:'editable' as const};}

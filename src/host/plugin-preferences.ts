@@ -1,0 +1,12 @@
+import fs from 'node:fs';import path from 'node:path';import os from 'node:os';
+import {normalizePluginPreferences,defaultPluginPreferences} from '../plugin-config';
+export class PreferenceStore {
+ private value=defaultPluginPreferences();private revision=0;private listeners=new Set<()=>void>();error?:string;
+ constructor(readonly file=path.join(process.env.DSH_HOME||path.join(os.homedir(),'.dsh'),'storages','chatcanvas-preferences.json')){try{if(fs.existsSync(file))this.value=normalizePluginPreferences(JSON.parse(fs.readFileSync(file,'utf8')));else if(path.basename(file)==='chatcanvas-preferences.json'){const legacy=path.join(path.dirname(file),'dser-preferences.json');if(fs.existsSync(legacy)){const raw=JSON.parse(fs.readFileSync(legacy,'utf8'));this.value=normalizePluginPreferences(Object.fromEntries(['nativeComposer','richMessages','streamAnimation','renderer'].filter(key=>Object.hasOwn(raw,key)).map(key=>[key,raw[key]])));}}}catch{this.error='设置文件无法读取，已使用默认值。';}}
+ get(){return {revision:this.revision,preferences:structuredClone(this.value),error:this.error};}
+ subscribe(fn:()=>void){this.listeners.add(fn);return()=>{this.listeners.delete(fn);};}
+ save(input:unknown,expectedRevision:number){const next=normalizePluginPreferences(input);if(expectedRevision!==this.revision)throw Error('设置已被其他窗口修改，请刷新后重试');fs.mkdirSync(path.dirname(this.file),{recursive:true});const temp=this.file+'.'+process.pid+'.tmp';try{fs.writeFileSync(temp,JSON.stringify(next,null,2)+'\n',{mode:0o600});fs.renameSync(temp,this.file);}finally{if(fs.existsSync(temp))fs.unlinkSync(temp);}this.value=next;this.revision++;this.error=undefined;this.listeners.forEach(fn=>fn());return this.get();}
+}
+export function registerPreferenceRoute(ctx:any,store:PreferenceStore){return ctx.inject(['connection'],(c:any)=>c.connection.fetch.register({path:'/api/chatcanvas.settings',methods:['GET','POST'],requestBody:'buffered',fetch:async(request:Request)=>{
+ try{if(request.method==='POST'){const origin=request.headers.get('origin');if(origin&&origin!==new URL(request.url).origin)return new Response('仅允许应用内修改设置',{status:403});if(!request.headers.get('content-type')?.startsWith('application/json'))return new Response('需要 JSON 请求',{status:415});const raw=await request.text();if(raw.length>50000)return new Response('设置过大',{status:413});const input=JSON.parse(raw);store.save(input.preferences,input.revision);}return Response.json(store.get(),{headers:{'Cache-Control':'no-store'}});}catch(e){return Response.json({error:String(e).slice(0,350)},{status:400});}
+ }}));}

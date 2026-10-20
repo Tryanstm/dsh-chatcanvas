@@ -1,0 +1,15 @@
+/node_modules/
+/dist/
+/outputs/
+/audit/*
+!/audit/native-manifest.json
+*.log
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+!/vendor/transcription/tfjs/dist/
+!/vendor/transcription/tfjs/dist/**
+!/vendor/transcription/wasm/dist/
+!/vendor/transcription/wasm/dist/**

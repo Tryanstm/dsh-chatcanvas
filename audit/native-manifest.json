@@ -1,0 +1,14 @@
+{
+  "hostVersion": "0.2.0-rc.2",
+  "buildCommit": "04f392c9ddd144fa426da2045178797da6db6c11",
+  "officialSource": "https://github.com/deepseek-ai/deepseek-harness",
+  "capture": "Read-only installed app.asar",
+  "chatSha256": "a33cbb8130b6e17cf1f7d5d1d7392567694050ca9ab5960ced66e264ea72fbbb",
+  "previewExports": [
+    "AssistantMarkdown",
+    "UserStyleBubble",
+    "ReasoningRow",
+    "TurnErrorItem"
+  ],
+  "hostIntegration": "Use live official Slot entry components; vendor copy is preview-only"
+}

@@ -1,0 +1,17 @@
+import type {JSONContent} from '@tiptap/core';
+import {blockHTML,blockText} from '../renderer/portable';
+import {enrichCanvasPreviews} from '../canvas/raster';
+import {copyPlainText} from '../renderer/CopyButton';
+import {writeClipboardFormats,writeLegacyRich} from './native-clipboard';
+export const writeRichClipboard=(plain:string,html:string)=>writeClipboardFormats(plain,html,copyPlainText);
+export function copyRichContent(content:JSONContent){const plain=blockText(content),html=(async()=>{let previews:Record<string,string>={};try{const rendered=await enrichCanvasPreviews({schemaVersion:1,type:'dser-document' as const,plainText:plain,content,previews:[] as import('../canvas/raster').CanvasRaster[]});previews=Object.fromEntries((rendered.previews||[]).filter(p=>p.data).map(p=>[p.canvasId,p.data!]));}catch{/* Semantic HTML remains useful when a visual preview is unavailable. */}return blockHTML(content,previews);})();if(navigator.clipboard?.write&&typeof ClipboardItem!=='undefined')try{return navigator.clipboard.write([new ClipboardItem({'text/plain':new Blob([plain],{type:'text/plain'}),'text/html':html.then(value=>new Blob([value],{type:'text/html'}))})]).catch(()=>writeRichClipboard(plain,blockHTML(content)));}catch{}if(writeLegacyRich(plain,blockHTML(content)))return Promise.resolve();return copyPlainText(plain);}
+/** A browser range inside a container omits its ancestor. Reattach that container's semantics. */
+export function copySelection(event:ClipboardEvent,root:HTMLElement){if(event.defaultPrevented)return false;const selection=window.getSelection();if(!selection?.rangeCount||selection.isCollapsed||!selection.anchorNode||!selection.focusNode||!root.contains(selection.anchorNode)||!root.contains(selection.focusNode))return false;const range=selection.getRangeAt(0),parent=(n:globalThis.Node)=>n.nodeType===1?n as Element:n.parentElement,box=parent(selection.anchorNode)?.closest('[data-dser-textbox],.dser-sent-textbox,.dser-editable-text'),code=parent(selection.anchorNode)?.closest('pre'),wrap=box?.contains(selection.focusNode)?'box':code?.contains(selection.focusNode)?'code':undefined;
+ const fragment=document.createElement('div');fragment.append(range.cloneContents());fragment.querySelectorAll('.dser-block-toolbar,.dser-copy-control,button,[contenteditable=false]').forEach(el=>el.remove());
+ if(wrap==='box'){
+  // cloneContents omits every ancestor common to both endpoints, including bold/code/paragraph.
+  let ancestor=parent(range.commonAncestorContainer);
+  while(ancestor&&ancestor!==box){if(/^(P|H[1-6]|BLOCKQUOTE|UL|OL|LI|STRONG|B|EM|I|U|S|CODE|PRE|SPAN|A)$/.test(ancestor.tagName)){const shell=ancestor.cloneNode(false) as HTMLElement;shell.removeAttribute('id');shell.append(...Array.from(fragment.childNodes));fragment.replaceChildren(shell);}ancestor=ancestor.parentElement;}
+  const outer=document.createElement('div');outer.setAttribute('data-dser-textbox','');outer.style.cssText='border:1px solid #cbd1dc;border-radius:10px;padding:14px';outer.append(...Array.from(fragment.childNodes));fragment.replaceChildren(outer);
+ }else if(wrap==='code'&&!fragment.querySelector('pre')){const pre=document.createElement('pre'),code=document.createElement('code');code.textContent=selection.toString();pre.append(code);fragment.replaceChildren(pre);}
+ const plain=selection.toString();if(!event.clipboardData)return false;event.preventDefault();event.clipboardData.setData('text/plain',plain);event.clipboardData.setData('text/html',fragment.innerHTML);return true;}

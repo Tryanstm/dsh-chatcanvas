@@ -1,0 +1,120 @@
+{
+  "name": "@local/dsh-chatcanvas",
+  "version": "1.4.0-rc.12",
+  "type": "module",
+  "license": "MIT",
+  "description": "ChatCanvas for DeepSeek Harness: rich messages, editable canvases, interactive UI, math and music.",
+  "exports": {
+    ".": "./dist/index.js",
+    "./client": "./dist/client.js",
+    "./core": "./dist/core.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "docs",
+    "skills",
+    "licenses",
+    "scripts/install-desktop.ps1",
+    "cordis.patch.yml",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "README.md",
+    "README.zh-CN.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node scripts/test.mjs",
+    "preview": "node scripts/serve.mjs",
+    "package": "node scripts/package.mjs",
+    "release": "node scripts/package.mjs && node scripts/source-package.mjs && node scripts/release-archives.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-chat",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-primitives",
+        "@deepseek-ai/dsh-client-ui-renderer"
+      ]
+    }
+  },
+  "dependencies": {
+    "@jitl/quickjs-singlefile-browser-release-sync": "0.32.0",
+    "@tiptap/core": "3.7.2",
+    "@tiptap/extension-code-block-lowlight": "3.7.2",
+    "@tiptap/extension-image": "3.7.2",
+    "@tiptap/extension-text-style": "3.7.2",
+    "@tiptap/pm": "3.7.2",
+    "@tiptap/starter-kit": "3.7.2",
+    "@tonejs/midi": "2.0.28",
+    "acorn": "8.15.0",
+    "fabric": "6.9.0",
+    "html-to-image": "1.11.13",
+    "katex": "0.16.22",
+    "lowlight": "3.3.0",
+    "mathjs": "14.8.1",
+    "nerdamer": "2.0.0",
+    "plotly.js-dist-min": "3.1.0",
+    "quickjs-emscripten-core": "0.32.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "zod": "3.25.76",
+    "zod-to-json-schema": "3.25.0"
+  },
+  "devDependencies": {
+    "@shikijs/langs": "4.3.1",
+    "@types/jsdom": "21.1.7",
+    "@types/node": "22.18.10",
+    "@types/plotly.js": "3.0.8",
+    "@types/react": "18.3.26",
+    "@types/react-dom": "18.3.7",
+    "anser": "2.3.5",
+    "clsx": "2.0.0",
+    "diff": "9.0.0",
+    "esbuild": "0.25.11",
+    "fake-indexeddb": "6.2.4",
+    "immer": "10.1.1",
+    "jsdom": "26.1.0",
+    "mdast-util-from-markdown": "2.0.3",
+    "mdast-util-gfm": "3.1.0",
+    "mdast-util-math": "3.0.0",
+    "micromark-core-commonmark": "2.0.3",
+    "micromark-extension-gfm": "3.0.0",
+    "micromark-extension-math": "3.1.0",
+    "micromark-factory-space": "2.0.1",
+    "micromark-util-character": "2.1.1",
+    "micromark-util-classify-character": "2.0.1",
+    "micromark-util-sanitize-uri": "2.0.1",
+    "micromark-util-symbol": "2.0.1",
+    "micromark-util-types": "2.0.2",
+    "shiki": "4.3.1",
+    "simple-icons": "16.31.0",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
+    "zustand": "4.4.7"
+  },
+  "engines": {
+    "dsh": "0.2.0-rc.2 || 0.2.1-rc.2"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-tools": "0.2.0-rc.2 || 0.2.1-rc.2"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+ "name":"@local/dsh-chatcanvas-integration","version":"1.0.0","type":"module",
+ "license":"MIT","exports":{".":"./dist/index.js","./client":"./dist/client.js"},
+ "files":["dist","cordis.patch.yml","README.md"],
+ "scripts":{"build":"node build.mjs"},
+ "dsh":{"bundle":{"patch":"./cordis.patch.yml"},"client":{"platform":"web","immediately":true,"inject":["@local/dsh-chatcanvas"]}}
+}

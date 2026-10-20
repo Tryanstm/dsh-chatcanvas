@@ -1,0 +1,7 @@
+const digits:Record<string,number>={'零':0,'〇':0,'一':1,'二':2,'两':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9};
+const units:Record<string,number>={'十':10,'百':100,'千':1000,'万':10000,'亿':100000000};
+function integer(text:string){if(!/[十百千万亿]/.test(text))return Number([...text].map(c=>digits[c]).join(''));let total=0,section=0,number=0;for(const c of text){if(c in digits)number=digits[c]!;else{const unit=units[c]!;if(unit<10000){section+=(number||1)*unit;number=0;}else{section+=number;total+=(section||1)*unit;section=0;number=0;}}}return total+section+number;}
+const names:Record<string,string>={'德尔塔':'Δ','阿尔法':'α','贝塔':'β','伽马':'γ','西格玛':'σ','欧米伽':'ω','西塔':'θ','派':'π'};
+export function normalizeMathInput(text:string){return text.replace(/德尔塔|阿尔法|贝塔|伽马|西格玛|欧米伽|西塔|派/g,w=>names[w]!).replace(/[０-９]/g,c=>String(c.charCodeAt(0)-0xff10)).replace(/[零〇一二两三四五六七八九十百千万亿]+(?:点[零〇一二两三四五六七八九]+)?/g,word=>{const [whole,fraction]=word.split('点');return String(integer(whole!))+(fraction?'.'+[...fraction].map(c=>digits[c]).join(''):'');}).replace(/乘以|乘|×|＊/g,'*').replace(/除以|除|÷|／/g,'/').replace(/等于|＝/g,'=').replace(/加|＋/g,'+').replace(/减|−|－/g,'-').replace(/平方|([A-Za-z0-9α-ωΑ-Ω)）])平(?![\u4e00-\u9fff])/g,(_w,base)=>`${base||''}^2`).replace(/立方/g,'^3');}
+/** Presentation only: keep variable names/case and implicit multiplication as authored. */
+export function displayMathInput(text:string){return normalizeMathInput(text).replace(/\^2(?!\d)/g,'²').replace(/\^3(?!\d)/g,'³').replace(/=/g,' = ').replace(/-/g,' − ').replace(/\+/g,' + ').replace(/\s+/g,' ').trim();}

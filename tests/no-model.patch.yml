@@ -1,0 +1,5 @@
+# Isolated acceptance only: request admission still runs; no provider can make a paid call.
+- id: agent-default-model
+  config:
+    provider: renderer-no-network
+    model: missing

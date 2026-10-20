@@ -1,0 +1,7 @@
+{
+  "source": "https://deb.debian.org/debian/pool/main/t/timgm6mb-soundfont/timgm6mb-soundfont_1.3.orig.tar.gz",
+  "sha256": "c5378b62028c920cb11e4803327983fee2f2cdff5dc89c708e39da417e51c854",
+  "author": "Tim Brechbill; David Bolton",
+  "license": "GPL-2.0-only",
+  "modified": false
+}

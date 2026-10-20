@@ -1,0 +1,7 @@
+{
+  "package": "@tensorflow/tfjs-backend-wasm",
+  "version": "3.21.0",
+  "tarball": "https://registry.npmjs.org/@tensorflow/tfjs-backend-wasm/-/tfjs-backend-wasm-3.21.0.tgz",
+  "integrity": "sha512-TVkJWrqukdxvIaQn9jZvtXR+7fmT7sti6NQH5OKVcBmFYIW7I3RiRRE66inVrHjEEvIVTUuW9yo9Ialn31EFIw==",
+  "sha256": "d1042f99ea5a8818736dd6394cecae39ae74c548cd4a3346235b8725b7216456"
+}

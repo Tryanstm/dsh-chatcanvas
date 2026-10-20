@@ -1,0 +1,8 @@
+import type {JSONContent} from '@tiptap/core';
+import type {RichEnvelope} from './wire';
+/** Clone a source block, keeping its paragraph hierarchy and exact effective text style. */
+export function templateBlock(source:RichEnvelope,path:number[],text:string):JSONContent{
+ let node:JSONContent|undefined=source.content;for(const index of path)node=node?.content?.[index];if(!node||['doc','canvasBlock','uiBlock','mathBlock','image'].includes(node.type||''))throw new Error('模板路径必须指向文字块');
+ const leaves:JSONContent[]=[];const collect=(n:JSONContent)=>{if(n.type==='text')leaves.push(n);n.content?.forEach(collect);};collect(node);if(!leaves.length)throw new Error('模板块没有文字样式');if(leaves.some(n=>JSON.stringify(n.marks||[])!==JSON.stringify(leaves[0]!.marks||[])))throw new Error('模板块内有多种格式，请按更细的路径分别引用');
+ const next=structuredClone(node),effective=source.layout?.find(l=>l.path.slice(0,path.length).every((v,i)=>v===path[i])&&l.path.length>=path.length);let inserted=false;const rewrite=(n:JSONContent)=>{if(n.type==='text'){if(inserted){n.text='';return;}inserted=true;n.text=text;if(effective){const attrs={fontSize:effective.fontSize,color:effective.color,fontFamily:effective.fontFamily},style=n.marks?.find(m=>m.type==='textStyle');if(style)style.attrs={...style.attrs,...attrs};else(n.marks??=[]).push({type:'textStyle',attrs});if(Number(effective.fontWeight)>=600&&!n.marks?.some(m=>m.type==='bold'))n.marks!.push({type:'bold'});if(effective.fontStyle==='italic'&&!n.marks?.some(m=>m.type==='italic'))n.marks!.push({type:'italic'});}}n.content?.forEach(rewrite);if(n.content)n.content=n.content.filter(c=>c.type!=='text'||c.text);};rewrite(next);if(!text)throw new Error('模板替换文字不能为空');return next;
+}

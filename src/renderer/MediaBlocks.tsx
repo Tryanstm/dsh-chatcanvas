@@ -1,0 +1,14 @@
+import {tableHTML} from '../table/model';
+import {TableDocumentSchema,type TableDocument} from '../protocol';
+import {textSVG,importTextProject} from '../text/files';
+import React from 'react';
+import {MusicDocumentSchema,VisualTextDocumentSchema,type MusicDocument,type VisualTextDocument} from '../protocol';
+import {ComponentFrame} from './ComponentFrame';
+import {MusicEditor} from '../music/MusicEditor';
+import {VisualText} from '../text/VisualText';
+import {download} from '../music/files';
+export function MusicBlockView({document,onChange,onDelete,onCopy,active=true}:{document:MusicDocument;scope?:string;onChange?:(d:MusicDocument)=>void;onDelete?:()=>void;onCopy?:(d:MusicDocument)=>void;active?:boolean}){const doc=MusicDocumentSchema.parse(document),editable=doc.mode==='editable';return <ComponentFrame copyNode={{type:'musicBlock',attrs:{document}}} kind="music" title={doc.title} width={720} height={420} editable={editable} onDelete={onDelete} onCopy={onCopy?()=>onCopy(doc):undefined}><MusicEditor spec={doc.spec} title={doc.title} active={active} editable={editable} onChange={spec=>onChange?.({...doc,spec})}/></ComponentFrame>;}
+export function VisualTextBlockView({document,onChange,onDelete,onCopy}:{document:VisualTextDocument;scope?:string;onChange?:(d:VisualTextDocument)=>void;onDelete?:()=>void;onCopy?:(d:VisualTextDocument)=>void}){const doc=VisualTextDocumentSchema.parse(document),editable=doc.mode==='editable';return <ComponentFrame copyNode={{type:'visualTextBlock',attrs:{document}}} kind="text" title={doc.title} width={doc.width} height={doc.height} editable={editable} onDelete={onDelete} onCopy={onCopy?()=>onCopy(doc):undefined}><div className="dser-text-document"><VisualText value={doc} width={doc.width} height={doc.height} editable={editable} initialEditing onChange={v=>onChange?.({...doc,...v})} onResize={(width,height)=>onChange?.({...doc,width,height})}/><div className="dser-text-export"><button onClick={()=>download(textSVG(doc),doc.title+'.svg','image/svg+xml')}>SVG 图片</button>{editable&&<label>导入工程<input type="file" accept=".json" onChange={async e=>{const file=e.target.files?.[0];if(file)try{onChange?.(importTextProject(await file.text()));}catch(error){alert(String(error));}e.target.value='';}}/></label>}<button onClick={()=>download(doc.text,doc.title+'.txt','text/plain;charset=utf-8')}>导出文字</button><button onClick={()=>download(JSON.stringify({format:'dser-text-project',version:1,document:doc},null,2),doc.title+'.dser-text.json','application/json')}>保存工程</button></div></div></ComponentFrame>;}
+
+/** Historical enhanced tables retain their contents as ordinary HTML tables. */
+export function TableBlockView({document}:{document:TableDocument;scope?:string;onChange?:(d:TableDocument)=>void;onDelete?:()=>void;onCopy?:(d:TableDocument)=>void}){const doc=TableDocumentSchema.parse(document);return <div className="dser-rich-table-scroll" dangerouslySetInnerHTML={{__html:tableHTML(doc.spec)}}/>;}

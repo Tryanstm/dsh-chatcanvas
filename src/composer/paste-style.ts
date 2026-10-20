@@ -1,0 +1,4 @@
+import {Plugin} from '@tiptap/pm/state';
+/** Browser chrome backgrounds are not document highlighting. Own structured clipboard keeps its data. */
+export function cleanPastedBackground(html:string){const doc=document.implementation.createHTMLDocument('');doc.body.innerHTML=html;for(const el of doc.querySelectorAll<HTMLElement>('[style]')){el.style.removeProperty('background');el.style.removeProperty('background-color');el.style.removeProperty('background-image');}return doc.body.innerHTML;}
+export function pasteStylePlugin(){return new Plugin({props:{transformPastedHTML:cleanPastedBackground},appendTransaction(transactions,_old,state){if(!transactions.some(t=>t.getMeta('paste')))return null;const marks=(state.storedMarks??state.selection.$from.marks()).filter(m=>m.type.name!=='code').flatMap(m=>m.type.name==='textStyle'&&m.attrs.backgroundColor?[m.type.create({...m.attrs,backgroundColor:null})]:[m]);return state.tr.setStoredMarks(marks);}});}

@@ -1,0 +1,33 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {newQuickJSWASMModuleFromVariant} from 'quickjs-emscripten-core';
+import variant from '@jitl/quickjs-singlefile-browser-release-sync';
+import {createProgramMachine} from '../src/ui/program-machine';
+import {compileUIProgram,exportUIProgram,importUIProgram} from '../src/ui/program';
+import {createPreviewExecutor} from '../src/ui/quickjs';
+import {ProgramSchema,type VisualProgram,type ProgramStep} from '../src/ui/blocks';
+import {UISchema,validateUI} from '../src/protocol';
+import {readableError} from '../src/errors';
+import {migrateRichContent} from '../src/composer/migrate';
+const step=(kind:ProgramStep['kind'],extra:Partial<ProgramStep>={}):ProgramStep=>({id:crypto.randomUUID(),kind,...extra});
+const program=(body:ProgramStep[],trigger:any={type:'click',target:'A'}):VisualProgram=>ProgramSchema.parse({id:'p',owner:{kind:'element',id:'A'},trigger,body});
+const doc=(programs:VisualProgram[])=>UISchema.parse({state:{x:0},initialPage:'home',pages:[{id:'home',name:'首页',root:{id:'root',type:'container',children:[{id:'A',type:'button'},{id:'B',type:'button'}]}}],programs});
+test('ownership, nested expressions and branches survive canonical code roundtrip',()=>{const p=program([step('if',{value:{op:'equal',args:[{op:'var',args:['x','global']},0]},body:[step('move',{target:'B',x:10,y:20})],otherwise:[step('stop')]})]);const source=exportUIProgram(doc([p])),restored=importUIProgram(source,doc([]));assert.deepEqual(restored.programs,[p]);assert.equal(restored.programs![0]!.owner.id,'A');});
+test('condition is edge-triggered, including initially true; stays true does not repeat',()=>{const machine=createProgramMachine([program([step('change',{name:'count',value:1})],{type:'condition',condition:{op:'equal',args:[{op:'var',args:['x']},10]}})]);let s:any={x:10,count:0};s=machine.run(s,{type:'tick'});assert.equal(s.count,1);s=machine.run(s,{type:'tick'});assert.equal(s.count,1);s=machine.run({...s,x:0},{type:'tick'});s=machine.run({...s,x:10},{type:'tick'});assert.equal(s.count,2);});
+test('targeted release requires matching down and release; no-target is preview-wide',()=>{const p=program([step('change',{name:'count',value:1})],{type:'pointerup',target:'A'}),m=createProgramMachine([p]);let s:any={count:0};s=m.run(s,{type:'pointerup',id:'A',targetIds:['A'],downTargetIds:['B']});assert.equal(s.count,0);s=m.run(s,{type:'pointerup',id:'A',targetIds:['A'],downTargetIds:['A']});assert.equal(s.count,1);});
+test('nested repeat, continue and break act on nearest loop',()=>{const m=createProgramMachine([program([step('repeat',{value:3,body:[step('change',{name:'outer',value:1}),step('repeat',{value:10,body:[step('change',{name:'inner',value:1}),step('break')]}),step('continue'),step('set',{name:'wrong',value:true})]})])]);const s=m.run({outer:0,inner:0},{type:'click',id:'A'});assert.equal(s.outer,3);assert.equal(s.inner,3);assert.equal(s.wrong,undefined);});
+test('forever yields, does not restart unbounded fibers and resumes after wait',()=>{const m=createProgramMachine([program([step('forever',{body:[step('change',{name:'count',value:1}),step('wait',{value:2,unit:'frames'})]})],{type:'always'})]);let s:any={count:0};for(let i=0;i<10;i++){s=m.run(s,{type:'tick',time:i/30});assert.ok(m.inspect().running<=1);}assert.ok(s.count>=2&&s.count<=5);});
+test('the generated program executes in the actual isolated QuickJS engine',async()=>{const engine=await newQuickJSWASMModuleFromVariant(variant),vm=createPreviewExecutor(engine,compileUIProgram(doc([program([step('set',{name:'x',value:42}),step('move',{target:'B',x:10,y:20})])])));try{const s:any=vm.run({x:0},{type:'click',id:'A',targetIds:['A'],page:'home'});assert.equal(s.x,42);assert.deepEqual(s.__dserEffects[0].values,{x:10,y:20});}finally{vm.dispose();}});
+test('SVG bindings are accepted but static script-like paths remain rejected',()=>{const d=doc([]);d.pages[0]!.root.children!.push({id:'curve',type:'stroke',path:'{{curvePath}}'});d.state.curvePath='M0 0 L2 3';assert.doesNotThrow(()=>validateUI(UISchema.parse(d)));assert.throws(()=>UISchema.parse({...d,pages:[{...d.pages[0],root:{id:'bad',type:'stroke',path:'javascript:alert(1)'}}]}));});
+test('legacy writing boxes migrate into block containers without losing marks or linebreaks',()=>{const old:any={type:'textBox',attrs:{variant:'writing'},content:[{type:'text',text:'a',marks:[{type:'bold'}]},{type:'hardBreak'},{type:'text',text:'b'}]};const value=migrateRichContent(old);assert.deepEqual(value.content?.[0]?.content,old.content);assert.equal(value.content?.[0]?.type,'paragraph');});
+test('tool errors decode escaped envelopes into short field guidance',()=>{const value=readableError([{type:'text',text:'Error: '+JSON.stringify([{path:['pages',0,'root','path'],code:'invalid_string',validation:'regex',message:'Invalid'}])}]);assert.match(value.summary,/pages\[0\]/);assert.ok(value.summary.length<220);assert.equal(value.fields.length,1);});
+
+test('clones inherit programs, self targets and independent local state; only the clicked instance fires',()=>{
+ const make=program([step('clone',{target:'A'})],{type:'start'});make.id='make';
+ const clone=program([step('set',{scope:'element',name:'own',value:5})],{type:'clone'});clone.id='clone-start';
+ const click=program([step('change',{scope:'element',name:'own',value:1}),step('property',{target:'self',name:'opacity',value:.4})]);click.id='click';
+ const m=createProgramMachine([make,clone,click]);let s:any=m.run({},{type:'start',page:'home',activeIds:['A']});
+ s=m.run(s,{type:'tick',page:'home',activeIds:['A']});assert.equal(m.inspect().locals['element:clone-1'].own,5);
+ s=m.run(s,{type:'click',id:'clone-1',cloneId:'clone-1',targetIds:['clone-1'],sourceTargetIds:['A'],page:'home',activeIds:['A']});
+ assert.equal(m.inspect().locals['element:clone-1'].own,6);assert.equal(m.inspect().locals['element:A'],undefined);assert.equal(s.__dserEffects.at(-1).target,'clone-1');
+});
