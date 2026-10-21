@@ -8,7 +8,35 @@
 
 ChatCanvas 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的第三方插件。在对话中使用富文本、画布、交互界面、数学图像和音乐编辑器，边讨论边修改。
 
-![功能概览，非软件截图](docs/assets/features.svg)
+## 看看实际操作
+
+三段由真实录屏剪辑的短演示，可直接在下方播放，也可下载 MP4。等待与打字过程已加速，片段在后续 AI 回复出现前结束。视频配有中英文功能说明，软件界面为简体中文。
+
+### 表达更清楚 · 21 秒
+
+使用标题、引用和颜色，整理数学表达，再补充改动说明。开头的格式示例为静态截图，视频中已注明。
+
+https://github.com/user-attachments/assets/b8679eac-9fc5-479a-9335-aa826f832c0c
+
+[下载 MP4](https://github.com/Tryanstm/dsh-chatcanvas/raw/refs/heads/main/media/demos/compose.mp4)
+
+### 把想法画出来 · 26.5 秒
+
+在输入框中插入画布，直接勾画界面布局，补上图像区、控件和注记。
+
+https://github.com/user-attachments/assets/82bdbab1-b996-42c0-a54e-44af016d4413
+
+[下载 MP4](https://github.com/Tryanstm/dsh-chatcanvas/raw/refs/heads/main/media/demos/canvas.mp4)
+
+### 边讨论，边修改 · 24 秒
+
+在界面草案中选中并拖动控件，调整结果面板和文字的位置。
+
+https://github.com/user-attachments/assets/5737babc-d01e-439c-95f1-6cfb779e6cde
+
+[下载 MP4](https://github.com/Tryanstm/dsh-chatcanvas/raw/refs/heads/main/media/demos/ui-editor.mp4)
+
+[录屏说明与后续演示的补充方式](docs/DEMOS.md#简体中文)
 
 ## 功能
 
@@ -20,6 +48,13 @@ ChatCanvas 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harnes
 | 数学图像 | 探索函数、方程、参数和二维／三维图像 |
 | 音乐 | 编辑音符与音轨、试听乐器、导入 MIDI、导出 MIDI/WAV，以及本地 WAV/MP3 转录 |
 | 可编辑提问 | AI 展示草案，你直接调整，再把结果提交给 AI |
+
+<details>
+<summary>功能概览图</summary>
+
+![功能概览，非软件截图](docs/assets/features.svg)
+
+</details>
 
 ## 安装
 

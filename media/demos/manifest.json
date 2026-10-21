@@ -1,0 +1,41 @@
+{
+  "description": "Edited real-operation demonstrations. Original recordings are not distributed.",
+  "videos": [
+    {
+      "file": "canvas.mp4",
+      "seconds": 26.45,
+      "width": 1280,
+      "height": 800,
+      "fps": 60,
+      "codec": "H.264",
+      "audio": false,
+      "bytes": 547530,
+      "sha256": "0b7b2afeff94fb6892e006d8a52855c4a9df98934edbbc33340456016ce26032",
+      "attachmentUrl": "https://github.com/user-attachments/assets/82bdbab1-b996-42c0-a54e-44af016d4413"
+    },
+    {
+      "file": "compose.mp4",
+      "seconds": 20.95,
+      "width": 1280,
+      "height": 800,
+      "fps": 60,
+      "codec": "H.264",
+      "audio": false,
+      "bytes": 458156,
+      "sha256": "d017d9ca88e960f08d121170f2d7e8c3c16ce6c7942d37c08a15663a6010fd92",
+      "attachmentUrl": "https://github.com/user-attachments/assets/b8679eac-9fc5-479a-9335-aa826f832c0c"
+    },
+    {
+      "file": "ui-editor.mp4",
+      "seconds": 24.05,
+      "width": 1280,
+      "height": 800,
+      "fps": 60,
+      "codec": "H.264",
+      "audio": false,
+      "bytes": 865264,
+      "sha256": "f15a850ed3c19f5f3317325c16ca3a16901b62ac94a9701c8e5afeff4c5b1f67",
+      "attachmentUrl": "https://github.com/user-attachments/assets/5737babc-d01e-439c-95f1-6cfb779e6cde"
+    }
+  ]
+}
