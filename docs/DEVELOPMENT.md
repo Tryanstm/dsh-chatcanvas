@@ -23,8 +23,13 @@ Release assets:
 ```sh
 node scripts/public-check.mjs
 pnpm release
+node scripts/release-checksums.mjs
 ```
 
 The install stage is built from the package manifest's file allowlist. The source export starts from a separate source allowlist and has no parent Git history. Packaging checks reject execution-policy modules and machine-specific installation paths. The output directory is excluded from Git. Put compiled `.tgz`, source `.zip` and `SHA256SUMS.txt` in a GitHub Release.
 
 The renamed plugin keeps existing document/data identifiers for compatibility. Public branding and package identity are ChatCanvas; do not change persistent wire/storage identifiers as a cosmetic rename.
+
+Release ZIP creation uses the Windows bundled BSD tar, or Python 3 on Linux/macOS (GNU tar cannot create ZIP archives). GitHub's Ubuntu runner provides Python 3.
+
+The repository also has a deliberate release-request workflow. A maintainer updates `.github/release-request.json` on `main` with exactly `tag` (matching `v` + package version) and `sourceCommit` (a full reviewed commit SHA). That one file change triggers build, tests, package checks, checksum creation and publication using the repository's temporary Actions token. Normal source pushes do not publish a release. Existing releases are not overwritten, and the publishing job is restricted to this repository. Build-produced archives can differ byte-for-byte from local archives; the accompanying checksum file applies to that release's actual assets.

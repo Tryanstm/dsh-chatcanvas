@@ -1,0 +1,59 @@
+name: Publish preview release
+on:
+  push:
+    branches: [main]
+    paths: [.github/release-request.json]
+permissions:
+  contents: read
+concurrency:
+  group: chatcanvas-release
+  cancel-in-progress: false
+jobs:
+  release:
+    if: github.repository == 'Tryanstm/dsh-chatcanvas'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Validate explicit release request
+        id: request
+        run: node scripts/release-request.mjs
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.request.outputs.source }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm build
+      - run: pnpm test
+      - run: node scripts/public-check.mjs
+      - run: pnpm release
+      - run: node scripts/release-checksums.mjs
+      - name: Publish the verified archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.request.outputs.tag }}
+          SOURCE_COMMIT: ${{ steps.request.outputs.source }}
+          IS_PRERELEASE: ${{ steps.request.outputs.prerelease }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo 'A release already exists. Refusing to overwrite its assets.'
+            exit 1
+          fi
+          version="${RELEASE_TAG#v}"
+          args=(--repo "$GITHUB_REPOSITORY" --target "$SOURCE_COMMIT" --title "ChatCanvas $version — Public Preview / 公开测试版" --notes-file docs/RELEASE_NOTES.md)
+          if [ "$IS_PRERELEASE" = true ]; then args+=(--prerelease); fi
+          gh release create "$RELEASE_TAG" "${args[@]}" "outputs/local-dsh-chatcanvas-$version.tgz" "outputs/dsh-chatcanvas-source-$version.zip" outputs/SHA256SUMS.txt

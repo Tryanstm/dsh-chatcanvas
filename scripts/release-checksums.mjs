@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import {assertPublicTree} from './public-check.mjs';
+assertPublicTree();assertPublicTree('outputs/plugin');
+const {version,name}=JSON.parse(fs.readFileSync('package.json','utf8'));
+const packaged=JSON.parse(fs.readFileSync('outputs/plugin/package.json','utf8'));
+if(name!=='@local/dsh-chatcanvas'||packaged.name!==name||packaged.version!==version)throw Error('Release package identity mismatch');
+const files=[`local-dsh-chatcanvas-${version}.tgz`,`dsh-chatcanvas-source-${version}.zip`];
+const data=files.map(name=>({name,bytes:fs.readFileSync('outputs/'+name)}));
+if(data[0].bytes.readUInt16BE(0)!==0x1f8b||data[1].bytes.readUInt32LE(0)!==0x04034b50)throw Error('Invalid archive format');
+fs.writeFileSync('outputs/SHA256SUMS.txt',data.map(({name,bytes})=>createHash('sha256').update(bytes).digest('hex')+'  '+name+'\n').join(''));
+console.log('Release archives checked; SHA256SUMS.txt created.');
