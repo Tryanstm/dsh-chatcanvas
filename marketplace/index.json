@@ -1,6 +1,55 @@
 {
   "format": 1,
-  "title": {"en":"ChatCanvas plugins","zh":"对话画布插件源"},
-  "description": {"en":"Awaiting the first verified npm publication. No packages are listed yet.","zh":"等待首次 npm 发布与校验，目前尚无上架条目。"},
-  "plugins": []
+  "title": {
+    "en": "ChatCanvas plugins",
+    "zh": "对话画布插件源"
+  },
+  "description": {
+    "en": "Prebuilt ChatCanvas releases maintained by Tryanstm. Third-party plugins for DeepSeek Harness.",
+    "zh": "Tryanstm 维护的对话画布预编译包。这是第三方插件源。"
+  },
+  "plugins": [
+    {
+      "name": "dsh-chatcanvas",
+      "title": {
+        "en": "ChatCanvas",
+        "zh": "对话画布 · ChatCanvas"
+      },
+      "description": {
+        "en": "Rich messages, editable canvases, interactive UI, math and music for DeepSeek Harness.",
+        "zh": "在 DeepSeek Harness 对话中使用富文本、可编辑画布、交互界面、数学图像与音乐编辑器。"
+      },
+      "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMTI4IDEyOCI+DQogIDxyZWN0IHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiByeD0iMzAiIGZpbGw9IiM2YjdjZmYiLz4NCiAgPHBhdGggZD0iTTM0IDM1aDYwdjQ2SDU4TDM3IDk4VjgxaC0zeiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4NCiAgPHBhdGggZD0iTTUwIDY1aDI4TTUwIDUxaDE3IiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+DQo8L3N2Zz4NCg==",
+      "author": "Tryanstm",
+      "homepage": "https://github.com/Tryanstm/dsh-chatcanvas#readme",
+      "repository": {
+        "url": "https://github.com/Tryanstm/dsh-chatcanvas"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "chatcanvas",
+          "rich-text-editor",
+          "canvas",
+          "interactive-ui",
+          "data-visualization",
+          "music-editor"
+        ]
+      },
+      "versions": [
+        {
+          "version": "1.4.0-rc.13",
+          "publishTimestamp": 1792607538,
+          "source": {
+            "type": "npm",
+            "registry": "https://registry.npmjs.org/"
+          },
+          "engines": {
+            "dsh": "0.2.0-rc.2 || 0.2.1-rc.2"
+          }
+        }
+      ]
+    }
+  ]
 }

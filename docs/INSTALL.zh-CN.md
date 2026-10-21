@@ -6,7 +6,7 @@
 
 先启动过一次受支持版本的 Harness。已验证的集成目标为 0.2.0-rc.2、0.2.1-rc.2；Windows 有辅助安装脚本，其他系统尚未验证。
 
-从 Releases 下载编译好的 `.tgz`，保持压缩状态。不要双击运行它，也不要选择自动生成的 Source code 源码归档。
+当前 npm 测试版为 `dsh-chatcanvas@1.4.0-rc.13`。Releases 中保留旧版 rc.12 编译包。下载的 `.tgz` 保持压缩状态；不要双击运行，也不要选择自动生成的 Source code 源码归档。
 
 ## 安装
 
@@ -16,14 +16,14 @@
 
 ```powershell
 $ChatCanvasCli = 'C:\path\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd'
-& $ChatCanvasCli plugin --profile desktop add 'C:\path\local-dsh-chatcanvas-1.4.0-rc.12.tgz'
+& $ChatCanvasCli plugin --profile desktop add 'dsh-chatcanvas@1.4.0-rc.13'
 ```
 
 4. 重新打开应用，在插件列表和设置 → **对话画布 · ChatCanvas** 中核对版本。
 
 源码附带 `scripts/install-desktop.ps1`，参数为应用目录 `-AppDirectory` 和安装包路径 `-PackagePath`。它调用官方 CLI。即使安装本地包，宿主解析 profile 的其他依赖时仍可能联网；安装报错时应先排查，不要当成已经装好。
 
-若该宿主版本提供本地插件包安装页面，也可以使用该入口。不同版本的界面文案可能不同。
+也可以在宿主的“发现”页添加[本仓库的第三方市场源](PUBLICATION.md#简体中文)。若宿主提供本地插件包安装页面，也可使用下载的编译包；旧 rc.12 安装包的包名为 `@local/dsh-chatcanvas`。不同版本的界面文案可能不同。
 
 ## 从旧渲染插件升级
 
@@ -36,10 +36,10 @@ $ChatCanvasCli = 'C:\path\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd'
 卸载命令：
 
 ```powershell
-& $ChatCanvasCli plugin --profile desktop remove '@local/dsh-chatcanvas'
+& $ChatCanvasCli plugin --profile desktop remove 'dsh-chatcanvas'
 ```
 
-卸载不删除草稿或已发送的会话内容。迁移会话时要同时备份引用的快照、已发布文档和宿主附件。
+卸载旧 rc.12 时，将包名换为 `@local/dsh-chatcanvas`。跨这两个包名回退时先移除新包，保证只启用一套渲染器。卸载不删除草稿或已发送的会话内容。迁移会话时要同时备份引用的快照、已发布文档和宿主附件。
 
 ## 安装后检查
 

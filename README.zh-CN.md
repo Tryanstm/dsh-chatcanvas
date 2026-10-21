@@ -2,7 +2,7 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-[下载测试版](https://github.com/Tryanstm/dsh-chatcanvas/releases) · [安装说明](docs/INSTALL.zh-CN.md) · [反馈问题](https://github.com/Tryanstm/dsh-chatcanvas/issues)
+[npm 测试版](https://www.npmjs.com/package/dsh-chatcanvas/v/1.4.0-rc.13) · [安装说明](docs/INSTALL.zh-CN.md) · [插件市场](docs/PUBLICATION.md#简体中文) · [反馈问题](https://github.com/Tryanstm/dsh-chatcanvas/issues)
 
 **把 AI 对话变成可以编辑、探索和试听的工作空间。**
 
@@ -60,14 +60,14 @@ https://github.com/user-attachments/assets/5737babc-d01e-439c-95f1-6cfb779e6cde
 
 当前是**公开测试版**。已验证的集成目标为 Harness **0.2.0-rc.2 和 0.2.1-rc.2**。安装辅助脚本适用于 Windows；其他系统及宿主版本尚未验证。
 
-1. 在 [Releases 发布页](https://github.com/Tryanstm/dsh-chatcanvas/releases)下载 `local-dsh-chatcanvas-1.4.0-rc.12.tgz`。
-2. 完全退出 Harness。
-3. 通过桌面应用自带 CLI，或宿主支持的本地插件包入口安装。
+1. 完全退出 Harness；已安装旧本地包或组合渲染器时先禁用／移除旧包，见[迁移说明](docs/PUBLICATION.md#简体中文)。
+2. 找到桌面应用自带的 `resources/runtime/cli/bin/dsh.cmd`。
+3. 用该 CLI 的完整路径执行 `dsh.cmd plugin --profile desktop add dsh-chatcanvas@1.4.0-rc.13`。
 4. 重新打开，在设置中找到 **对话画布 · ChatCanvas**。
 
 GitHub 自动生成的 **Source code** 是开发源码，不能直接作为插件包安装。详细步骤、更新与回退见[安装说明](docs/INSTALL.zh-CN.md)。
 
-**npm／发现页：** 正在准备首次发布 `dsh-chatcanvas@1.4.0-rc.13`，目前尚未上架 npm，市场源暂时没有条目。完成核验前请继续使用上方的 GitHub 安装包。[查看市场源、发布状态和旧本地包迁移说明](docs/PUBLICATION.md#简体中文)。
+**npm／发现页：** [dsh-chatcanvas@1.4.0-rc.13](https://www.npmjs.com/package/dsh-chatcanvas/v/1.4.0-rc.13) 已上架 npm，可通过本仓库的第三方市场源发现安装。线上下载包已与核验过的本地预编译包逐字节校验。[查看市场源与旧本地包迁移说明](docs/PUBLICATION.md#简体中文)。旧版 `1.4.0-rc.12` 安装包仍保留在 [GitHub Releases](https://github.com/Tryanstm/dsh-chatcanvas/releases)。
 
 ## 怎么开始
 

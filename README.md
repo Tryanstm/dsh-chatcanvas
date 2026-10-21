@@ -2,7 +2,7 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-[Download preview](https://github.com/Tryanstm/dsh-chatcanvas/releases) · [Installation](docs/INSTALL.md) · [Report an issue](https://github.com/Tryanstm/dsh-chatcanvas/issues)
+[npm preview](https://www.npmjs.com/package/dsh-chatcanvas/v/1.4.0-rc.13) · [Installation](docs/INSTALL.md) · [Plugin market](docs/PUBLICATION.md#add-the-market-source) · [Report an issue](https://github.com/Tryanstm/dsh-chatcanvas/issues)
 
 **Turn AI conversations into a workspace you can edit, explore and play.**
 
@@ -60,14 +60,14 @@ https://github.com/user-attachments/assets/5737babc-d01e-439c-95f1-6cfb779e6cde
 
 This is a **preview release**. Tested integration targets: DeepSeek Harness **0.2.0-rc.2 and 0.2.1-rc.2**. The installation helper is for Windows. Other host versions and operating systems have not been verified.
 
-1. Open [Releases](https://github.com/Tryanstm/dsh-chatcanvas/releases) and download `local-dsh-chatcanvas-1.4.0-rc.12.tgz`.
-2. Fully quit Harness.
-3. Install through the desktop app's bundled CLI or its supported local-package installer.
+1. Fully quit Harness. If the old local ChatCanvas or combined renderer is installed, disable/remove it first; see [migration](docs/PUBLICATION.md#english).
+2. Find the desktop app's bundled `resources/runtime/cli/bin/dsh.cmd`.
+3. Run `dsh.cmd plugin --profile desktop add dsh-chatcanvas@1.4.0-rc.13` using that CLI's full path.
 4. Reopen Harness. The plugin settings section is **对话画布 · ChatCanvas**.
 
 The GitHub-generated **Source code** archive is for developers. It is not the compiled installation package. See [installation and rollback](docs/INSTALL.md).
 
-**npm / Discover:** the first `dsh-chatcanvas@1.4.0-rc.13` publication is being prepared. It is not yet available on npm, and the market source currently has no entries. Keep using the GitHub Release above until publication is verified. See [publishing, the market source and migration from the old local package](docs/PUBLICATION.md#english).
+**npm / Discover:** `dsh-chatcanvas@1.4.0-rc.13` is available on npm and in this repository's [third-party market source](docs/PUBLICATION.md#add-the-market-source). The downloaded npm archive has been checked against the reviewed prebuilt package. The older `1.4.0-rc.12` package remains in [GitHub Releases](https://github.com/Tryanstm/dsh-chatcanvas/releases).
 
 ## Start using it
 

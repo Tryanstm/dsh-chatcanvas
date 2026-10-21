@@ -30,7 +30,7 @@ The install stage is built from the package manifest's file allowlist. The sourc
 
 The renamed plugin keeps existing document/data identifiers for compatibility. Public branding and package identity are ChatCanvas; do not change persistent wire/storage identifiers as a cosmetic rename.
 
-The forthcoming npm distribution uses the unscoped name `dsh-chatcanvas`, starting with `1.4.0-rc.13`. Runtime package stages omit development previews and source maps but retain local runtime assets, licenses and host peer declarations. The full source archive retains development files. Run `pnpm package:npm` to create a prebuilt npm archive; do not publish the source root. See [publication and market verification](PUBLICATION.md). The existing `1.4.0-rc.12` Release keeps its original `@local/dsh-chatcanvas` identity and files.
+The npm distribution uses the unscoped name `dsh-chatcanvas`, starting with the published `1.4.0-rc.13`. Runtime package stages omit development previews and source maps but retain local runtime assets, licenses and host peer declarations. The full source archive retains development files. Run `pnpm package:npm` to create a prebuilt npm archive; do not publish the source root. See [publication and market verification](PUBLICATION.md). The existing `1.4.0-rc.12` Release keeps its original `@local/dsh-chatcanvas` identity and files.
 
 Release ZIP creation uses the Windows bundled BSD tar, or Python 3 on Linux/macOS (GNU tar cannot create ZIP archives). GitHub's Ubuntu runner provides Python 3.
 
