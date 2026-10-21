@@ -2,9 +2,11 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
+[下载测试版](https://github.com/Tryanstm/dsh-chatcanvas/releases) · [安装说明](docs/INSTALL.zh-CN.md) · [反馈问题](https://github.com/Tryanstm/dsh-chatcanvas/issues)
+
 **把 AI 对话变成可以编辑、探索和试听的工作空间。**
 
-ChatCanvas 是 DeepSeek Harness 的第三方插件。在对话中使用富文本、画布、交互界面、数学图像和音乐编辑器，边讨论边修改。
+ChatCanvas 是 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的第三方插件。在对话中使用富文本、画布、交互界面、数学图像和音乐编辑器，边讨论边修改。
 
 ![功能概览，非软件截图](docs/assets/features.svg)
 
@@ -23,7 +25,7 @@ ChatCanvas 是 DeepSeek Harness 的第三方插件。在对话中使用富文本
 
 当前是**公开测试版**。已验证的集成目标为 Harness **0.2.0-rc.2 和 0.2.1-rc.2**。安装辅助脚本适用于 Windows；其他系统及宿主版本尚未验证。
 
-1. 在仓库的 **Releases** 中下载 `local-dsh-chatcanvas-1.4.0-rc.12.tgz`。
+1. 在 [Releases 发布页](https://github.com/Tryanstm/dsh-chatcanvas/releases)下载 `local-dsh-chatcanvas-1.4.0-rc.12.tgz`。
 2. 完全退出 Harness。
 3. 通过桌面应用自带 CLI，或宿主支持的本地插件包入口安装。
 4. 重新打开，在设置中找到 **对话画布 · ChatCanvas**。
@@ -43,9 +45,20 @@ GitHub 自动生成的 **Source code** 是开发源码，不能直接作为插�
 
 本版界面语言为**简体中文**；提供中英文文档，尚未包含完整英文界面。
 
+## 设置
+
+打开 **设置 → 对话画布 · ChatCanvas**。公开插件只提供两项设置：
+
+| 选项 | 默认数量 | 调整方式 |
+| --- | --- | --- |
+| 程序推荐选项 | 2 项 | 点击数字，在弹窗中选择 0–5 项，再保存 |
+| AI 推荐选项 | 1 项 | 点击数字，在弹窗中选择 0–5 项，再保存 |
+
+执行审核、审核开关和工具／Skill 白名单不在本插件中。宿主自带的权限菜单继续保留。为兼容旧作品，内部文档格式和存储标识保持不变。
+
 ## 权限、隐私与费用
 
-插件不注册执行前审核，也不更改宿主权限预设。宿主权限继续生效。画布、UI 编辑和音频转录使用本地代码及随包资源；AI 推荐、翻译与推荐质量检查会使用 Harness 配置的模型，可能产生额外用量。详见[隐私说明](docs/PRIVACY.zh-CN.md)。
+插件不注册执行前审核，也不更改宿主权限预设。宿主权限继续生效。画布、UI 编辑和音频转录使用本地代码及随包资源；AI 推荐、翻译、推荐质量检查和自动生成会话标题会使用 Harness 配置的模型，可能产生额外用量。详见[隐私说明](docs/PRIVACY.zh-CN.md)。
 
 ## 测试版限制
 

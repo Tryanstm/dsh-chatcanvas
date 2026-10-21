@@ -2,9 +2,11 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
+[Download preview](https://github.com/Tryanstm/dsh-chatcanvas/releases) · [Installation](docs/INSTALL.md) · [Report an issue](https://github.com/Tryanstm/dsh-chatcanvas/issues)
+
 **Turn AI conversations into a workspace you can edit, explore and play.**
 
-ChatCanvas is a third-party plugin for DeepSeek Harness. It brings rich messages, editable canvases, interactive UI previews, math plots and music editing into the conversation.
+ChatCanvas is a third-party plugin for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness). It brings rich messages, editable canvases, interactive UI previews, math plots and music editing into the conversation.
 
 ![Capability overview — not an application screenshot](docs/assets/features.svg)
 
@@ -23,7 +25,7 @@ ChatCanvas is a third-party plugin for DeepSeek Harness. It brings rich messages
 
 This is a **preview release**. Tested integration targets: DeepSeek Harness **0.2.0-rc.2 and 0.2.1-rc.2**. The installation helper is for Windows. Other host versions and operating systems have not been verified.
 
-1. Open this repository's **Releases** section and download `local-dsh-chatcanvas-1.4.0-rc.12.tgz`.
+1. Open [Releases](https://github.com/Tryanstm/dsh-chatcanvas/releases) and download `local-dsh-chatcanvas-1.4.0-rc.12.tgz`.
 2. Fully quit Harness.
 3. Install through the desktop app's bundled CLI or its supported local-package installer.
 4. Reopen Harness. The plugin settings section is **对话画布 · ChatCanvas**.
@@ -43,9 +45,20 @@ Example prompts:
 
 The interface currently uses **Simplified Chinese**. This repository provides English and Chinese documentation. Full English UI localization is not included in this preview.
 
+## Settings
+
+Open **Settings → 对话画布 · ChatCanvas**. The public plugin exposes only two preferences:
+
+| Preference | Default | How to change it |
+| --- | --- | --- |
+| Program recommendations / 程序推荐选项 | 2 | Click the count, choose 0–5, then save |
+| AI recommendations / AI 推荐选项 | 1 | Click the count, choose 0–5, then save |
+
+Execution auditing, audit switches and tool/Skill whitelists are not part of this plugin. The host's permission controls remain available. Existing document and storage identifiers are retained for compatibility with older works.
+
 ## Permissions, privacy and cost
 
-ChatCanvas does not register an execution-review gate or change the host's permission presets. Host permissions continue to apply. Canvas/UI editing and audio transcription use local code and packaged assets. AI text recommendations, translations and their quality checks use the model configured in Harness and may incur extra usage. See [privacy and model usage](docs/PRIVACY.md).
+ChatCanvas does not register an execution-review gate or change the host's permission presets. Host permissions continue to apply. Canvas/UI editing and audio transcription use local code and packaged assets. AI text recommendations, translations, their quality checks and automatic conversation titles use the model configured in Harness and may incur extra usage. See [privacy and model usage](docs/PRIVACY.md).
 
 ## Preview limitations
 

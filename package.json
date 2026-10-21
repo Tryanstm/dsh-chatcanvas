@@ -4,6 +4,9 @@
   "type": "module",
   "license": "MIT",
   "description": "ChatCanvas for DeepSeek Harness: rich messages, editable canvases, interactive UI, math and music.",
+  "repository": {"type":"git","url":"git+https://github.com/Tryanstm/dsh-chatcanvas.git"},
+  "homepage": "https://github.com/Tryanstm/dsh-chatcanvas#readme",
+  "bugs": {"url":"https://github.com/Tryanstm/dsh-chatcanvas/issues"},
   "exports": {
     ".": "./dist/index.js",
     "./client": "./dist/client.js",
