@@ -8,7 +8,35 @@
 
 ChatCanvas is a third-party plugin for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness). It brings rich messages, editable canvases, interactive UI previews, math plots and music editing into the conversation.
 
-![Capability overview — not an application screenshot](docs/assets/features.svg)
+## See it in action
+
+Three short demonstrations, edited from real recordings. Play the videos below, or download their MP4 files. Waiting and typing are accelerated; the clips stop before subsequent AI replies. The interface shown is Simplified Chinese, with bilingual video captions.
+
+### Write clearly · 21 seconds
+
+Headings, quotes and colors; refine math notation and add a short instruction. The opening formatting example is a still screenshot, labeled in the video.
+
+https://github.com/user-attachments/assets/b8679eac-9fc5-479a-9335-aa826f832c0c
+
+[Download MP4](https://github.com/Tryanstm/dsh-chatcanvas/raw/refs/heads/main/media/demos/compose.mp4)
+
+### Sketch your idea · 26.5 seconds
+
+Insert a canvas and draw a layout directly in the composer, including a graph area, controls and annotations.
+
+https://github.com/user-attachments/assets/82bdbab1-b996-42c0-a54e-44af016d4413
+
+[Download MP4](https://github.com/Tryanstm/dsh-chatcanvas/raw/refs/heads/main/media/demos/canvas.mp4)
+
+### Edit the result · 24 seconds
+
+Select and drag controls, adjust a result panel and reposition text in a UI draft.
+
+https://github.com/user-attachments/assets/5737babc-d01e-439c-95f1-6cfb779e6cde
+
+[Download MP4](https://github.com/Tryanstm/dsh-chatcanvas/raw/refs/heads/main/media/demos/ui-editor.mp4)
+
+[About these recordings and adding more demos](docs/DEMOS.md)
 
 ## What you can do
 
@@ -20,6 +48,13 @@ ChatCanvas is a third-party plugin for [DeepSeek Harness](https://github.com/dee
 | Math | Explore functions, equations, parameters and 2D/3D plots |
 | Music | Edit notes and tracks, audition instruments, import MIDI, export MIDI/WAV and transcribe WAV/MP3 locally |
 | Visual questions | Let the AI show an editable draft and ask you to adjust it before proceeding |
+
+<details>
+<summary>Capability overview</summary>
+
+![Capability overview — not an application screenshot](docs/assets/features.svg)
+
+</details>
 
 ## Install
 
