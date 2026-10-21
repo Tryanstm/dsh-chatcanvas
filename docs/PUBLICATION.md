@@ -45,7 +45,7 @@ This is a third-party source maintained by this repository, not a built-in offic
    ```
 
 5. Wait for npm's automated review to finish. A successful CLI upload can still show **Validating** in the package's Versions tab, with only a `0.0.0-stage` placeholder publicly visible. Do not install or list that placeholder. Once the real version is available, run `pnpm marketplace`. It checks the actual npm version, publication time, repository, bundle metadata and SHA-512 integrity before replacing the market index. A missing version, network failure or mismatch leaves the existing index unchanged. Do not rebuild the archive/report between publishing and verification.
-6. Commit the verified index and update these status notes. Preview releases use npm's **`next`** tag, not `latest`. Existing npm versions and GitHub Release assets are not overwritten.
+6. Commit the verified index and update these status notes. Publish previews with npm's **`next`** tag. npm also assigns `latest` to a package's first published version and rejects removing that tag; currently both tags point to rc.13. This does not make it a stable release. Installation instructions pin the preview version. Existing npm versions and GitHub Release assets are not overwritten.
 
 The source checkout's `prepublishOnly` guard rejects accidental root publication. The prebuilt package has no lifecycle scripts. npm account credentials are never part of source control or the market index.
 
@@ -61,6 +61,6 @@ npm 的公开包名为 **`dsh-chatcanvas`**。安装包包含编译好的代码�
 
 启用 **插件 → 实验性插件 → 自定义插件市场** 后，在 **发现 → 添加索引源** 中填写上方的 `index.json` 地址。这个源由本仓库维护，是第三方插件源。索引只加入已经核验 npm 发布、宿主兼容范围和压缩包 SHA-512 的版本；缺少版本、网络失败或内容不一致时，不覆盖既有索引。
 
-维护步骤：构建与测试 → `pnpm package:npm` → 注册、验证邮箱、开启 2FA，用新版官方 npm CLI 网页登录 → `npm publish` 发布同一份 `.tgz` → 等待 npm 自动扫描通过 → `pnpm marketplace` → 提交核验后的索引并更新状态说明。登录和发布可能分别要求安全密钥验证，及时在网页完成。CLI 返回成功后，版本页仍可能显示 Validating，此时公开的 `0.0.0-stage` 只是占位版本，不应安装或加入市场。注册、登录和发布验证由 npm 处理，不需要向维护助手发送密码、验证码或令牌。测试版使用 `next` 标签，不作为稳定版 `latest` 发布。
+维护步骤：构建与测试 → `pnpm package:npm` → 注册、验证邮箱、开启 2FA，用新版官方 npm CLI 网页登录 → `npm publish` 发布同一份 `.tgz` → 等待 npm 自动扫描通过 → `pnpm marketplace` → 提交核验后的索引并更新状态说明。登录和发布可能分别要求安全密钥验证，及时在网页完成。CLI 返回成功后，版本页仍可能显示 Validating，此时公开的 `0.0.0-stage` 只是占位版本，不应安装或加入市场。注册、登录和发布验证由 npm 处理，不需要向维护助手发送密码、验证码或令牌。发布时指定 `next`；npm 仍会给首次发布自动加上且不允许删除 `latest`，当前两个标签都指向 rc.13。这不代表稳定版，安装说明固定指定测试版本。
 
 源码根目录有防误发布检查；实际发布预编译包。不要把账号凭据放进 Git 仓库、安装包或市场地址。
