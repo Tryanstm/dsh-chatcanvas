@@ -6,7 +6,7 @@ if(fs.existsSync(stage)){if(fs.lstatSync(stage).isSymbolicLink()||!fs.realpathSy
 fs.mkdirSync(stage,{recursive:true});fs.cpSync('outputs/plugin',path.join(stage,'package'),{recursive:true});
 const version=JSON.parse(fs.readFileSync('package.json','utf8')).version;if(!/^\d+\.\d+\.\d+(?:-[\w.]+)?$/.test(version))throw Error('Invalid version');
 function tar(args){const r=spawnSync('tar',args,{encoding:'utf8',windowsHide:true});if(r.error||r.status!==0)throw Error(String(r.error||r.stderr));}
-tar(['-czf',`outputs/local-dsh-chatcanvas-${version}.tgz`,'-C',stage,'package']);
+tar(['-czf',`outputs/dsh-chatcanvas-${version}.tgz`,'-C',stage,'package']);
 const sourceZip=path.resolve(`outputs/dsh-chatcanvas-source-${version}.zip`);
 if(process.platform==='win32')tar(['-a','-cf',sourceZip,'-C','outputs/source','dsh-chatcanvas']);
 else{const result=spawnSync('python3',['-m','zipfile','-c',sourceZip,'dsh-chatcanvas'],{cwd:'outputs/source',encoding:'utf8'});if(result.error||result.status!==0)throw result.error||Error(result.stderr);}

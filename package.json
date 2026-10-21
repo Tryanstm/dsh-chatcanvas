@@ -1,25 +1,33 @@
 {
-  "name": "@local/dsh-chatcanvas",
-  "version": "1.4.0-rc.12",
+  "name": "dsh-chatcanvas",
+  "version": "1.4.0-rc.13",
   "type": "module",
   "license": "MIT",
   "description": "ChatCanvas for DeepSeek Harness: rich messages, editable canvases, interactive UI, math and music.",
   "repository": {"type":"git","url":"git+https://github.com/Tryanstm/dsh-chatcanvas.git"},
   "homepage": "https://github.com/Tryanstm/dsh-chatcanvas#readme",
   "bugs": {"url":"https://github.com/Tryanstm/dsh-chatcanvas/issues"},
+  "author": "Tryanstm",
+  "keywords": ["dsh-plugin", "deepseek-harness", "chatcanvas", "rich-text-editor", "canvas", "interactive-ui", "data-visualization", "music-editor"],
+  "icon": "./docs/assets/chatcanvas.svg",
+  "publishConfig": {"access":"public","registry":"https://registry.npmjs.org/","tag":"next"},
   "exports": {
     ".": "./dist/index.js",
     "./client": "./dist/client.js",
     "./core": "./dist/core.js",
     "./package.json": "./package.json",
     "./cordis.patch.yml": "./cordis.patch.yml",
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./icon": "./docs/assets/chatcanvas.svg",
+    "./locale/en.json": "./locale/en.json",
+    "./locale/zh.json": "./locale/zh.json"
   },
   "files": [
     "dist",
     "docs",
     "skills",
     "licenses",
+    "locale",
     "scripts/install-desktop.ps1",
     "cordis.patch.yml",
     "LICENSE",
@@ -33,7 +41,10 @@
     "test": "node scripts/test.mjs",
     "preview": "node scripts/serve.mjs",
     "package": "node scripts/package.mjs",
-    "release": "node scripts/package.mjs && node scripts/source-package.mjs && node scripts/release-archives.mjs"
+    "release": "node scripts/package.mjs && node scripts/source-package.mjs && node scripts/release-archives.mjs",
+    "package:npm": "node scripts/npm-package.mjs",
+    "marketplace": "node scripts/marketplace.mjs",
+    "prepublishOnly": "node scripts/prepublish-guard.mjs"
   },
   "dsh": {
     "bundle": {

@@ -67,6 +67,8 @@ https://github.com/user-attachments/assets/5737babc-d01e-439c-95f1-6cfb779e6cde
 
 GitHub 自动生成的 **Source code** 是开发源码，不能直接作为插件包安装。详细步骤、更新与回退见[安装说明](docs/INSTALL.zh-CN.md)。
 
+**npm／发现页：** 正在准备首次发布 `dsh-chatcanvas@1.4.0-rc.13`，目前尚未上架 npm，市场源暂时没有条目。完成核验前请继续使用上方的 GitHub 安装包。[查看市场源、发布状态和旧本地包迁移说明](docs/PUBLICATION.md#简体中文)。
+
 ## 怎么开始
 
 正常输入消息，或在输入框中右键插入内容。可以让 AI 制作 UI、数学图像、音乐作品或组合画布。已经发送的作品需要复制为可编辑副本后再修改。

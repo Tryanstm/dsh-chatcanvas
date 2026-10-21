@@ -54,6 +54,6 @@ jobs:
             exit 1
           fi
           version="${RELEASE_TAG#v}"
-          args=(--repo "$GITHUB_REPOSITORY" --target "$SOURCE_COMMIT" --title "ChatCanvas $version — Public Preview / 公开测试版" --notes-file docs/RELEASE_NOTES.md)
+          args=(--repo "$GITHUB_REPOSITORY" --target "$SOURCE_COMMIT" --title "ChatCanvas $version — Public Preview / 公开测试版" --notes-file docs/RELEASE_NOTES_NPM.md)
           if [ "$IS_PRERELEASE" = true ]; then args+=(--prerelease); fi
-          gh release create "$RELEASE_TAG" "${args[@]}" "outputs/local-dsh-chatcanvas-$version.tgz" "outputs/dsh-chatcanvas-source-$version.zip" outputs/SHA256SUMS.txt
+          gh release create "$RELEASE_TAG" "${args[@]}" "outputs/dsh-chatcanvas-$version.tgz" "outputs/dsh-chatcanvas-source-$version.zip" outputs/SHA256SUMS.txt

@@ -1,0 +1,20 @@
+import './package.mjs';
+import fs from 'node:fs';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {assertPrebuiltPackage} from './package-stage.mjs';
+
+const manifest=assertPrebuiltPackage('outputs/plugin');
+const workspace=fs.realpathSync('.'), outputs=fs.realpathSync('outputs');
+if(!outputs.toLowerCase().startsWith((workspace+path.sep).toLowerCase())) throw Error('Package output must stay in the workspace');
+const stage=fs.mkdtempSync(path.join(outputs,'npm-package-'));
+fs.cpSync('outputs/plugin',path.join(stage,'package'),{recursive:true});
+const filename=`dsh-chatcanvas-${manifest.version}.tgz`;
+const result=spawnSync('tar',['-czf',path.join(outputs,filename),'-C',stage,'package'],{encoding:'utf8',windowsHide:true});
+if(result.error||result.status!==0) throw result.error||Error(result.stderr);
+const archive=fs.readFileSync(path.join(outputs,filename));
+if(archive.readUInt16BE(0)!==0x1f8b || archive.length>64*1024*1024) throw Error('Invalid or oversized npm archive');
+const report={name:manifest.name,version:manifest.version,filename,bytes:archive.length,sha256:createHash('sha256').update(archive).digest('hex'),integrity:'sha512-'+createHash('sha512').update(archive).digest('base64'),distTag:'next',status:'prepared-not-published'};
+fs.writeFileSync(path.join(outputs,'npm-publication.json'),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify(report,null,2));

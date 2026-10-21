@@ -23,7 +23,7 @@ import {RendererView,type RendererHostAdapter} from '../renderer/RendererView';
 import css from '../styles.css';
 export const inject=['slots','uiConversation','sessions','locale','remote','remote.skills','inputTriggers'];
 export function apply(ctx:any){
- const style=document.createElement('style');style.dataset.plugin='@local/dsh-chatcanvas';style.textContent=css;document.head.append(style);ctx.effect(()=>()=>style.remove());
+ const style=document.createElement('style');style.dataset.plugin='dsh-chatcanvas';style.textContent=css;document.head.append(style);ctx.effect(()=>()=>style.remove());
  const previousRecommend=getRendererIntegrations().recommend;const recommend=async(input:any,signal:AbortSignal)=>{const response=await fetch('api/dser.recommend',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(input),signal});const value=await response.json();if(!response.ok)throw new Error(value.error||'智能服务暂不可用');return value;};configureRendererIntegrations({recommend});ctx.effect(()=>()=>{if(getRendererIntegrations().recommend===recommend)configureRendererIntegrations({recommend:previousRecommend});});
  const mounts=new Set<Root>();ctx.effect(()=>()=>{mounts.forEach(root=>root.unmount());mounts.clear();});
  const renderCanvas=(props:any)=>{const node=props.node.data as CanvasNodeState;

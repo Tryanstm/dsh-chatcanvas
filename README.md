@@ -67,6 +67,8 @@ This is a **preview release**. Tested integration targets: DeepSeek Harness **0.
 
 The GitHub-generated **Source code** archive is for developers. It is not the compiled installation package. See [installation and rollback](docs/INSTALL.md).
 
+**npm / Discover:** the first `dsh-chatcanvas@1.4.0-rc.13` publication is being prepared. It is not yet available on npm, and the market source currently has no entries. Keep using the GitHub Release above until publication is verified. See [publishing, the market source and migration from the old local package](docs/PUBLICATION.md#english).
+
 ## Start using it
 
 Write normally, or right-click the composer to insert content. Ask the AI to create a UI preview, math plot, music project or shared canvas. Use an editable copy when you want to modify an already-sent work.

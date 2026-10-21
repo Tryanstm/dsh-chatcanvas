@@ -30,6 +30,8 @@ The install stage is built from the package manifest's file allowlist. The sourc
 
 The renamed plugin keeps existing document/data identifiers for compatibility. Public branding and package identity are ChatCanvas; do not change persistent wire/storage identifiers as a cosmetic rename.
 
+The forthcoming npm distribution uses the unscoped name `dsh-chatcanvas`, starting with `1.4.0-rc.13`. Runtime package stages omit development previews and source maps but retain local runtime assets, licenses and host peer declarations. The full source archive retains development files. Run `pnpm package:npm` to create a prebuilt npm archive; do not publish the source root. See [publication and market verification](PUBLICATION.md). The existing `1.4.0-rc.12` Release keeps its original `@local/dsh-chatcanvas` identity and files.
+
 Release ZIP creation uses the Windows bundled BSD tar, or Python 3 on Linux/macOS (GNU tar cannot create ZIP archives). GitHub's Ubuntu runner provides Python 3.
 
 The repository also has a deliberate release-request workflow. A maintainer updates `.github/release-request.json` on `main` with exactly `tag` (matching `v` + package version) and `sourceCommit` (a full reviewed commit SHA). That one file change triggers build, tests, package checks, checksum creation and publication using the repository's temporary Actions token. Normal source pushes do not publish a release. Existing releases are not overwritten, and the publishing job is restricted to this repository. Build-produced archives can differ byte-for-byte from local archives; the accompanying checksum file applies to that release's actual assets.
